@@ -25,7 +25,7 @@ export class AudioService {
   ];
 
   //whenever play new audio file, all these events are trigged by playEventsByUrlUntilStop$() 
-  private returnEventsWheneverNewFile(url) {
+     returnEventsOnNewFile(url) {
     return new Observable(observer => {
       // Play audio
       this.audioObj.src = url;
@@ -65,10 +65,10 @@ export class AudioService {
       });
     }
 
-  //receive value of returnEventsWheneverNewFile
+  //receive value of returnEventsOnNewFile
   //pipe brings the method 'takeUntil' to be applied on value from Observable
     playEventsByUrlUntilStop$(url) {
-      return this.returnEventsWheneverNewFile(url).pipe(takeUntil(this.stop$));
+      return this.returnEventsOnNewFile(url).pipe(takeUntil(this.stop$));
     }
 
     play(){
@@ -80,10 +80,10 @@ export class AudioService {
     }
   
     stop() {
-      this.stop$.next();
+      this.stop$.next(); // knows that stop by pipe takeUntil from playEventsByUrlUntilStop
     }
 
-    seekTo(seconds) {
+    songTime(seconds) {
       this.audioObj.currentTime = seconds;
     }
 

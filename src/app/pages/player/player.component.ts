@@ -1,54 +1,79 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AudioService } from "../../services/audio.service";
+import { CloudService } from "../../services/cloud.service";
+import { StreamState } from "../../interfaces/stream-state";
+
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss']
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  files: Array<any> = [
-    { name: "First Song", artist: "Inder" },
-    { name: "Second Song", artist: "You" },
-    { name: "Second Song", artist: "You" },
-    { name: "Second Song", artist: "You" }
-  ];
-  state;
+  files: Array<any> = [];
+  state: StreamState;
   currentFile: any = {};
 
+  constructor(
+    private audioService: AudioService,
+    private cloudService: CloudService) { 
+        // push media files from Cloud to files
+      this.cloudService.returnFilesAsObservables().subscribe(files => this.files = files);
+      // push state from audioService to state
+      this.audioService.sendStateChangeToAllApp().subscribe(state => this.state = state);
+    }
+
   isFirstPlaying() {
-    return false;
+    return this.currentFile.index === 0
   }
   isLastPlaying() {
-    return true;
+    return this.currentFile.index === this.files.length -1;
   }
 
-  openFile(){
-
+  openFile(file, index){
+    this.currentFile = { index, file }
+    this.stop() // knows that stop by pipe takeUntil from playEventsByUrlUntilStop
+    this.returnEventsOnNewFile(file.url)
   }
 
-  onSliderChangeEnd(event){
-
+  onSliderChangeSongCurrentTime(sliderPosition){
+    this.audioService.songTime(sliderPosition.value)
   }
 
   previous(){
-
+    const index = this.currentFile.index - 1;
+    const file = this.files[index]
+    this.openFile(file, index);
   }
 
   play(){
-
+    if (this.currentFile.index === undefined) { 
+      const index = 0;
+      const file = this.files[index]
+      this.openFile(file, index);
+      }
+    this.audioService.play();
   }
 
   pause(){
+    this.audioService.pause()
+  }
 
+  stop(){
+    this.audioService.stop(); 
   }
 
   next(){
+    const index = this.currentFile.index + 1;
+    const file = this.files[index]
+    this.openFile(file, index);
     
+  }
+
+  //events and values here dont are needed, cuz are read by sendStateChangeToAllApp
+  //used to start observable and audio playback
+  returnEventsOnNewFile(url){
+    this.audioService.returnEventsOnNewFile(url).subscribe(events => { })
   }
 }

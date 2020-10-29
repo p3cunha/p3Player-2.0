@@ -28,7 +28,8 @@
           <!-- TIME SLIDER -->
         <mat-toolbar-row>
            {{ state?.readableCurrentTime }}
-           <mat-slider class="time-slider" min="0" [max]="state?.duration" step="1" [value]="state?.currentTime" (input)="onSliderChangeEnd($event)" [disabled]="state?.error || currentFile.index === undefined"></mat-slider>
+           <mat-slider class="time-slider" min="0" [max]="state?.duration" step="1" [value]="state?.currentTime" 
+           (input)="onSliderChangeSongCurrentTime($event)" [disabled]="state?.error || currentFile.index === undefined"></mat-slider>
            {{ state?.readableDuration }}
         </mat-toolbar-row>
         <!-- MUSIC CONTROLS -->
