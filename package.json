@@ -22,7 +22,9 @@
     "@angular/platform-browser-dynamic": "~10.1.0",
     "@angular/router": "~10.1.0",
     "moment": "^2.29.1",
-    "rxjs": "~6.6.0",
+    "ngx-nav-drawer": "0.0.3",
+    "rxjs": "^6.6.3",
+    "rxjs-compat": "^6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

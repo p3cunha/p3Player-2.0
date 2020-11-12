@@ -3,6 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { AudioService } from "../../services/audio.service";
 import { CloudService } from "../../services/cloud.service";
 import { StreamState } from "../../interfaces/stream-state";
+import { userConfig } from 'src/app/interfaces/userConfig';
+
+
+
 
 @Component({
   selector: 'app-player',
@@ -14,6 +18,7 @@ export class PlayerComponent {
   files: Array<any> = [];
   state: StreamState;
   currentFile: any = {};
+  navOpen = false;
 
   constructor(
     private audioService: AudioService,
@@ -72,8 +77,14 @@ export class PlayerComponent {
   }
 
   //events and values here dont are needed, cuz are read by sendStateChangeToAllApp
-  //used to start observable and audio playback
+  //start observable and audio playback
   returnEventsOnNewFile(url){
     this.audioService.returnEventsOnNewFile(url).subscribe(events => { })
   }
+
+  userConfig: userConfig[] = [
+    {value: 'geren', viewValue: 'Gerenciar minha conta'},
+    {value: 'viewConf', viewValue: 'Configurações de exibição'},
+    {value: 'cntrSelec', viewValue: 'Seletor de país'}
+  ];
 }
