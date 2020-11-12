@@ -1,6 +1,6 @@
 .container {
     .main-toolbar {
-      background: linear-gradient(to right, blue, pink);
+      background: linear-gradient(to top, blue, pink);
       padding: 4px 4px 0px 4px;
       margin-bottom: 2px;
       position: fixed;
@@ -8,11 +8,12 @@
       left: 0;
       right: 0;
       z-index: 1;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+      box-shadow:  0 0 0 2px rgba(0, 0, 255, 0.26),
+      0 0 0 4px rgba(0,0,255,0.10);
       height: 50px;
 
       span{
-        color: white;
+        color: black;
         font-family: 'Times New Roman', Times, serif;
         font-size: 13px;  
         margin-left: 15px;
@@ -43,9 +44,7 @@
     }
   
     .content {
-      position: relative;
-      height: 350px;
-     
+
       .logo {
         margin: 2.5rem;
         text-align: center;
@@ -68,16 +67,21 @@
 
       mat-list {
         flex-grow: 30;
-        overflow: hidden;
-        position: relative;
+        overflow: auto;
+        padding-bottom: 135px;
+        
       }
     }
-  
+
+
     .media-footer {
-      position: absolute;
+      position: fixed;
       bottom: 0;
       width: 100%;
-
+      box-shadow:  0 0 0 1px rgb(255, 255, 255, 1),
+      0 0 0 2px rgb(255, 255, 255, 0.75),
+      0 0 0 4px rgb(255, 255, 255, 0.50),
+      0 0 0 10px rgb(255, 255, 255, 0.25);
       .slider-bar{
         background: linear-gradient(to left, blue, pink);
 
